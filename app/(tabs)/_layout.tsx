@@ -1,45 +1,69 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { BottomNavigation } from "react-native-paper";
+import ExploreScreen from "./explore";
+import HomeScreen from "./(home)/index";
+import RewardsScreen from "./(rewards)/rewards";
+import MyOrderScreen from "./(my_order)/my_order";
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+export default function Layout() {
+  const [index, setIndex] = useState(0); // Quản lý tab hiện tại
+  const [routes] = useState([
+    { key: 'home', title: 'Home', focusedIcon: 'home' },
+    { key: 'rewards', title: 'Rewards', focusedIcon: 'gift' },
+    { key: 'myOrder', title: 'My Order', focusedIcon: 'clipboard' },
+  ]);
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const renderScene = BottomNavigation.SceneMap({
+    home: HomeScreen,
+    rewards: RewardsScreen,
+    myOrder: MyOrderScreen,
+  });
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <BottomNavigation
+          navigationState={{ index, routes }}
+          onIndexChange={setIndex} // Cập nhật tab khi người dùng chọn
+          barStyle={styles.tabBar} // Styling cho TabBar
+          activeColor="black" // Màu icon/tab đang chọn
+          inactiveColor="#ccc" // Màu icon/tab không được chọn
+          renderScene={renderScene} // Hiển thị nội dung tab
+          key={routes[index].key}
+
+          
+        />
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#80EE98",
+  },
+  content: {
+    flex: 1,
+    borderRadius: 100,
+  },
+  tabBar: {
+    // // position: "relative", // Đặt TabBar nổi
+    // backgroundColor: 'white',
+    // position: 'relative',
+    // overflow: 'hidden',
+    backgroundColor: "#fff",
+    // borderRadius: 30,
+    height: 70,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 5 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 5,
+    // elevation: 10,
+    // marginLeft: 20,
+    // marginRight: 20,
+    // marginBottom: 20,
+  },
+});
