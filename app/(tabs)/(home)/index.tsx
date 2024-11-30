@@ -4,6 +4,8 @@ import { Text } from "@/components/Themed";
 import Icon from "react-native-vector-icons/FontAwesome";
 import LoyaltyCard from "@/components/based/LoyaltyCard";
 import ItemCard from "@/components/based/ItemCard";
+import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
+import { Button } from "react-native-paper";
 
 const items = [
   {
@@ -49,6 +51,17 @@ const items = [
 ];
 
 function HomeScreen() {
+  const router = useRouter(); // Khởi tạo router từ expo-router
+
+  // Hàm điều hướng tới màn hình chi tiết
+  const navigateToDetail = (item: any) => {
+    // console.log(item);
+    router.push({
+      pathname: "/detail",
+      params: { item: JSON.stringify(item) }, // Chuyển đổi object thành JSON string
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -62,9 +75,12 @@ function HomeScreen() {
             />
             <Text style={styles.userTitle}>Good morning, Cong</Text>
           </View>
-          <View style={styles.headerContainer}>
-            <Icon name="shopping-cart" style={styles.icon} />
-          </View>
+          <Icon
+            name="shopping-cart"
+            style={styles.icon}
+            onPress={() => router.push("/detail")}
+          />{" "}
+          {/* Sử dụng router.push */}
         </View>
 
         <LoyaltyCard drinksPurchased={5} />
@@ -74,7 +90,6 @@ function HomeScreen() {
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* Phần cuộn dọc */}
         <View style={styles.contentContainer}>
           <View style={styles.fixedOfferContainer}>
             <Text style={styles.itemTitle}>Great offer 🔥🔥🔥</Text>
@@ -86,6 +101,7 @@ function HomeScreen() {
                   name={item.name}
                   description={item.description}
                   price={item.price}
+                  onPress={() => navigateToDetail(item)} // Khi nhấn vào item, điều hướng tới màn hình chi tiết
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -107,6 +123,7 @@ function HomeScreen() {
                   price={item.price}
                   width={330} // Cung cấp width
                   height={150} // Cung cấp height
+                  onPress={() => navigateToDetail(item)} // Khi nhấn vào item, điều hướng tới màn hình chi tiết
                 />
               )}
               keyExtractor={(item) => item.id.toString()} // Đảm bảo id là string
@@ -116,8 +133,6 @@ function HomeScreen() {
           </View>
         </View>
       </ScrollView>
-
-      {/* Phần header và LoyaltyCard không cuộn */}
     </View>
   );
 }
@@ -131,14 +146,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     marginTop: 0,
   },
-  headerContainer: {
-    // position: "absolute", // Giữ header cố định
-    // top: 0,
-    // left: 0,
-    // right: 0,
-    // paddingHorizontal: 20,
-    // zIndex: 1000,
-  },
+  headerContainer: {},
   header: {
     flexDirection: "row",
     paddingVertical: 10,
@@ -187,3 +195,17 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+
+// import { Link } from "expo-router";
+// import { Text } from "@/components/Themed";
+
+// function HomeScreen() {
+//     return (
+//       <Link href="/detail">
+//         <Text>hellloooo</Text>
+//       </Link>
+//     );
+// }
+
+// export default HomeScreen;

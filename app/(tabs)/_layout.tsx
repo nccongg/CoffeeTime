@@ -1,69 +1,77 @@
-import React, { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import { BottomNavigation } from "react-native-paper";
-import ExploreScreen from "./explore";
-import HomeScreen from "./(home)/index";
-import RewardsScreen from "./(rewards)/rewards";
-import MyOrderScreen from "./(my_order)/my_order";
+import React from "react";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Link, Tabs } from "expo-router";
+import { Pressable } from "react-native";
+import Entypo from "@expo/vector-icons/Entypo";
+import {Colors} from "@/constants/Colors";
+import { useColorScheme } from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Feather from "@expo/vector-icons/Feather";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function Layout() {
-  const [index, setIndex] = useState(0); // Quản lý tab hiện tại
-  const [routes] = useState([
-    { key: 'home', title: 'Home', focusedIcon: 'home' },
-    { key: 'rewards', title: 'Rewards', focusedIcon: 'gift' },
-    { key: 'myOrder', title: 'My Order', focusedIcon: 'clipboard' },
-  ]);
+// https://akveo.github.io/react-native-ui-kitten/docs/design-system/use-theme-variables#declare-custom-component
+import { useTheme } from "@ui-kitten/components";
 
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
-    rewards: RewardsScreen,
-    myOrder: MyOrderScreen,
-  });
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <BottomNavigation
-          navigationState={{ index, routes }}
-          onIndexChange={setIndex} // Cập nhật tab khi người dùng chọn
-          barStyle={styles.tabBar} // Styling cho TabBar
-          activeColor="black" // Màu icon/tab đang chọn
-          inactiveColor="#ccc" // Màu icon/tab không được chọn
-          renderScene={renderScene} // Hiển thị nội dung tab
-          key={routes[index].key}
-
-          
-        />
-      </View>
-    </View>
-  );
+// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>["name"];
+  color: string;
+}) {
+  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#80EE98",
-  },
-  content: {
-    flex: 1,
-    borderRadius: 100,
-  },
-  tabBar: {
-    // // position: "relative", // Đặt TabBar nổi
-    // backgroundColor: 'white',
-    // position: 'relative',
-    // overflow: 'hidden',
-    backgroundColor: "#fff",
-    // borderRadius: 30,
-    height: 70,
-    // shadowColor: "#000",
-    // shadowOffset: { width: 0, height: 5 },
-    // shadowOpacity: 0.1,
-    // shadowRadius: 5,
-    // elevation: 10,
-    // marginLeft: 20,
-    // marginRight: 20,
-    // marginBottom: 20,
-  },
-});
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
+
+  const theme = useTheme();
+
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: theme["color-primary-hover"],
+        // Disable the static render of the header on web
+        // to prevent a hydration error in React Navigation v6.
+        // headerShown: useClientOnlyValue(false, true),
+        tabBarStyle: { borderWidth: 0 },
+      }}
+    >
+      <Tabs.Screen
+        name="(home)"
+        options={{
+          headerShown: false,
+          title: "Shop",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome6 name="shop" color={color} size={24} />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tabs.Screen
+        name="(rewards)"
+        options={{
+          headerShown: false,
+          title: "Rewards",
+          tabBarIcon: ({ color }) => (
+            <Feather name="gift" color={color} size={24} />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+      <Tabs.Screen
+        name="(my_order)"
+        options={{
+          headerShown: false,
+          title: "Order",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="clipboard-list-outline"
+              color={color}
+              size={24}
+            />
+          ),
+          tabBarShowLabel: false,
+        }}
+      />
+    </Tabs>
+  );
+}

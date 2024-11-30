@@ -9,6 +9,7 @@ interface ItemCardProps {
   price: number; // Giá sản phẩm
   width?: number; // Chiều rộng của thẻ (tùy chọn)
   height?: number; // Chiều cao của thẻ (tùy chọn)
+  onPress: () => void; // Hàm xử lý khi nhấn vào thẻ
   onAddToCart?: () => void; // Hàm xử lý thêm vào giỏ hàng (tùy chọn)
 }
 
@@ -19,17 +20,19 @@ const ItemCard: React.FC<ItemCardProps> = ({
   price,
   width = 150, // Giá trị mặc định nếu không truyền vào
   height = 230, // Giá trị mặc định nếu không truyền vào
+  onPress, // Hàm xử lý khi nhấn vào thẻ
   onAddToCart = () => {},
 }) => {
   // Kiểm tra nếu width và height khác mặc định
   const isCustomSize = width !== 150 || height !== 230;
 
   return (
-    <View
+    <TouchableOpacity
       style={[
         styles.card,
         { width, height, flexDirection: isCustomSize ? "row" : "column" },
       ]}
+      onPress={onPress} // Gọi hàm onPress khi nhấn vào thẻ
     >
       <Image
         source={{ uri: imageUrl }}
@@ -50,7 +53,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
       <TouchableOpacity style={styles.addButton} onPress={onAddToCart}>
         <Icon name="plus" size={16} color="#fff" />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -74,7 +77,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     width: "100%",
-    // backgroundColor: 'red',
   },
   name: {
     width: "100%",
@@ -98,7 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#54331E",
     borderRadius: 1000,
     padding: 10,
-    // alignItems: "center",
     justifyContent: "flex-end",
     right: 10,
     bottom: 10,

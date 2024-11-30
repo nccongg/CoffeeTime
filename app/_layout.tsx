@@ -1,48 +1,85 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { RootSiblingParent } from 'react-native-root-siblings';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { useEffect, useState } from "react";
+import "react-native-reanimated";
+import SplashScreen from "@/components/based/splashScreen";
+import { useColorScheme } from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// https://docs.expo.dev/develop/user-interface/safe-areas/
+import { SafeAreaView } from "react-native-safe-area-context";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// https://akveo.github.io/react-native-ui-kitten/docs/guides/icon-packages#eva-icons
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+
+// https://docs.expo.dev/router/reference/authentication/
+import { Slot } from "expo-router";
+import { RootSiblingParent } from "react-native-root-siblings";
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from "expo-router";
+
+export const unstable_settings = {
+  // Ensure that reloading on `/modal` keeps a back button present.
+  initialRouteName: "(app)",
+};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  const [loaded, error] = useFonts({
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    ...FontAwesome.font,
   });
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  const [isAppReady, setIsAppReady] = useState(false);
 
-  if (!loaded) {
-    return null;
+  // Simulate loading process for the app
+  useEffect(() => {
+    const prepareApp = async () => {
+      try {
+        // Fake async work: API calls, asset loading, etc.
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setIsAppReady(true);
+      } catch (e) {
+        console.error("Error during app preparation", e);
+      }
+    };
+
+    prepareApp();
+  }, []);
+
+  useEffect(() => {
+    if (error) throw error;
+  }, [error]);
+
+  if (!loaded || !isAppReady) {
+    return <SplashScreen />;
   }
+
+  return <RootLayoutNav />;
+}
+
+function RootLayoutNav() {
+  const colorScheme = useColorScheme();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <>
-        <RootSiblingParent>
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
-            <StatusBar style="auto" />
+      <RootSiblingParent>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light}>
+          <ThemeProvider
+            value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+          >
+            <Slot />
           </ThemeProvider>
-        </RootSiblingParent>
-      </>
-
+        </ApplicationProvider>
+      </RootSiblingParent>
     </SafeAreaView>
   );
 }
