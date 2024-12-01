@@ -7,10 +7,12 @@ import {
   Image,
 } from "react-native";
 import { Link } from "expo-router";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Feather"; // Đảm bảo bạn đã cài thư viện react-native-vector-icons
+
 import { useSearchParams } from "expo-router/build/hooks";
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "@/components/Themed";
+import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
 
 const coffeeOptions = {
   size: ["Small", "Medium", "Large"],
@@ -24,6 +26,7 @@ export default function DetailScreen() {
   const searchParams = useSearchParams();
   const itemString = searchParams.get("item"); // Lấy chuỗi JSON từ params
   const [item, setItem] = useState<any>(null); // Lưu đối tượng `item` đã parse
+
 
   useEffect(() => {
     if (itemString) {
@@ -68,15 +71,21 @@ export default function DetailScreen() {
     } 
   }, [item, size, milk, quantity]); 
 
+  const router = useRouter();
   const handleAddToCart = () => {
-    console.log("Added to cart:", {
-      size,
-      milk,
-      sweetness,
-      quantity,
-      totalPrice,
+    // console.log("Added to cart:", {
+    //   size,
+    //   milk,
+    //   sweetness,
+    //   quantity,
+    //   totalPrice,
+    // });
+    router.push({
+      pathname: "/cart",
+      // params: { item: JSON.stringify(item) }, // Chuyển đổi object thành JSON string
     });
   };
+
 
   const handleQuantityChange = (action: "increase" | "decrease") => {
     setQuantity((prev) =>
@@ -181,7 +190,7 @@ export default function DetailScreen() {
         </TouchableOpacity>
       </View>
       {/* Biểu tượng giỏ hàng */}
-      <Link href="/" asChild>
+      <Link href="/cart" asChild>
         <TouchableOpacity style={styles.cartButton}>
           <Icon name="shopping-cart" style={styles.icon} />
         </TouchableOpacity>
@@ -194,7 +203,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#FFF",
+    backgroundColor: "#EAEAEA",
   },
   content: {},
   image: {
@@ -275,6 +284,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#54331E",
     padding: 15,
     borderRadius: 5,
+    height: 55,
     alignItems: "center",
   },
   addToCartText: {

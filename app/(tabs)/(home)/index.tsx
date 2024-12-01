@@ -1,7 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Image, FlatList, ScrollView } from "react-native";
+import { View, StyleSheet, Image, FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { Text } from "@/components/Themed";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/Feather"; // Đảm bảo bạn đã cài thư viện react-native-vector-icons
+
 import LoyaltyCard from "@/components/based/LoyaltyCard";
 import ItemCard from "@/components/based/ItemCard";
 import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
@@ -67,18 +68,20 @@ function HomeScreen() {
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <View style={styles.userContainer}>
-            <Image
-              source={{
-                uri: "https://lh3.googleusercontent.com/a/ACg8ocKkrrJH43cgRwPtPbKr94pl51NrEkH_CYH1ut5Jo-z9qF97eIsK=s288-c-no",
-              }}
-              style={styles.avatar}
-            />
+            <TouchableOpacity onPress={() => router.push("/profile")}>
+              <Image
+                source={{
+                  uri: "https://lh3.googleusercontent.com/a/ACg8ocKkrrJH43cgRwPtPbKr94pl51NrEkH_CYH1ut5Jo-z9qF97eIsK=s288-c-no",
+                }}
+                style={styles.avatar}
+              />
+            </TouchableOpacity>
             <Text style={styles.userTitle}>Good morning, Cong</Text>
           </View>
           <Icon
             name="shopping-cart"
             style={styles.icon}
-            onPress={() => router.push("/detail")}
+            onPress={() => router.push("/cart")}
           />{" "}
           {/* Sử dụng router.push */}
         </View>
