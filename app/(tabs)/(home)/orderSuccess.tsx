@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
+import { useRouter } from "expo-router"; 
 
 const OrderSuccess = () => {
   const router = useRouter();
@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#000000", // Màu đen
+    color: "#000000", 
     marginBottom: 10,
   },
   description: {
     fontSize: 15,
-    color: "#A0A0A0", // Màu xám
+    color: "#A0A0A0", 
     textAlign: "center",
     marginBottom: 5,
   },
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: "#FFFFFF", // Màu trắng cho chữ
+    color: "#FFFFFF", 
     fontSize: 16,
     fontWeight: "500",
   },

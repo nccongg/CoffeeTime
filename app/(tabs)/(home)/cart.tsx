@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   StyleSheet,
   Image,
@@ -22,53 +21,10 @@ interface Item {
   quantity: number;
 }
 
-const items = [
-  {
-    id: "1",
-    imageUrl:
-      "https://baristaschool.vn/wp-content/uploads/2021/05/cappuccinolatteart.jpg",
-    name: "Cappuccino",
-    description: "Rich espresso with steamed milk and foam.",
-    price: 3.5,
-  },
-  {
-    id: "2",
-    imageUrl:
-      "https://file.hstatic.net/200000079049/article/ban_sao_cafe-latte-4_af4c8c67f30f471e93e13acd6b5bb67c.png",
-    name: "Latte",
-    description: "Espresso with steamed milk and a hint of foam.",
-    price: 4.0,
-  },
-  {
-    id: "3",
-    imageUrl:
-      "https://dayphache.edu.vn/wp-content/uploads/2016/05/ca-phe-mocha-nong.jpg",
-    name: "Mocha",
-    description: "Espresso, steamed milk, and chocolate syrup.",
-    price: 4.5,
-  },
-  {
-    id: "4",
-    imageUrl:
-      "https://thecoffeeholic.vn/storage/photos/2/Phinholic/esp/ca-phe-Americano-1.jpg",
-    name: "Americano",
-    description: "Espresso with hot water.",
-    price: 2.5,
-  },
-  {
-    id: "5",
-    imageUrl:
-      "https://caphecaonguyen.vn/uploads/details/2021/08/images/cach-pha-ca-phe-caramel-macchiato-chuan-italia1.jpg",
-    name: "Macchiato",
-    description: "Espresso with a dollop of steamed milk.",
-    price: 3.8,
-  },
-];
-
 const Cart = () => {
   const navigation = useNavigation();
   const router = useRouter();
-  // Khởi tạo cartItems với một số item mẫu từ danh sách items
+  // Khởi tạo cartItems 
   const [cartItems, setCartItems] = useState<Item[]>([
     {
       id: "1",
@@ -98,20 +54,6 @@ const Cart = () => {
       quantity: 1,
     },
   ]);
-  const [isCheckout, setIsCheckout] = useState(false);
-
-  const addItemToCart = (item: Item) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((i) => i.id === item.id);
-      if (existingItem) {
-        return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      } else {
-        return [...prevItems, { ...item, quantity: 1 }];
-      }
-    });
-  };
 
   const removeItemFromCart = (itemId: string) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
@@ -191,7 +133,6 @@ const styles = StyleSheet.create({
   backButton: {
     marginBottom: 20,
     width: 50,
-    // backgroundColor: 'red',
   },
   icon: {
     fontSize: 28,

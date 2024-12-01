@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   FlatList,
+  Alert,
 } from "react-native";
-import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
+import { useRouter, useLocalSearchParams } from "expo-router"; 
 import { Text } from "@/components/Themed";
 import LoyaltyCard from "@/components/based/LoyaltyCard";
+
 const RewardsScreen = () => {
   const router = useRouter();
+  const params = useLocalSearchParams(); 
+  const [points, setPoints] = useState(2750);
+
+  useEffect(() => {
+    if (params.point) {
+      const redeemPoints = parseInt(params.point as string, 10);
+
+      if (points >= redeemPoints) {
+        Alert.alert("Congratulations!", "You have redeemed your reward!");
+        setPoints((prevPoints) => prevPoints - redeemPoints);
+      } else {
+        Alert.alert("Not enough points", "You don't have enough points.");
+      }
+    }
+  }, [params.point]);
 
   const historyData = [
     {
@@ -37,24 +53,6 @@ const RewardsScreen = () => {
       dateTime: "2024-11-22 08:45",
       points: 30,
     },
-    {
-      id: "5",
-      drinkName: "Iced Latte",
-      dateTime: "2024-11-26 10:15",
-      points: 40,
-    },
-    {
-      id: "6",
-      drinkName: "Mocha Frappuccino",
-      dateTime: "2024-11-24 16:00",
-      points: 60,
-    },
-    {
-      id: "7",
-      drinkName: "Espresso",
-      dateTime: "2024-11-22 08:45",
-      points: 30,
-    },
   ];
 
   const renderHistoryItem = ({ item }: { item: any }) => (
@@ -73,13 +71,16 @@ const RewardsScreen = () => {
         <Text style={styles.headerText}>Rewards</Text>
       </View>
       <View style={styles.content}>
-        <LoyaltyCard drinksPurchased={8} />
+        <LoyaltyCard initialDrinksPurchased={8} />
         <View style={styles.myPoint}>
           <View style={styles.pointWrapper}>
             <Text style={styles.pointTitle}>My Points</Text>
-            <Text style={styles.points}>2750</Text>
+            <Text style={styles.points}>{points}</Text>
           </View>
-          <TouchableOpacity style={styles.redeemWrapper}>
+          <TouchableOpacity
+            style={styles.redeemWrapper}
+            onPress={() => router.push("/redeem")}
+          >
             <Text style={styles.redeemText}>Redeem drinks</Text>
           </TouchableOpacity>
         </View>
@@ -101,7 +102,6 @@ const RewardsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#EAEAEA",
     padding: 20,
@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 16,
-    // textAlign: "center",
     color: "#333",
   },
   listContainer: {
@@ -196,7 +195,7 @@ const styles = StyleSheet.create({
   hPoints: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#00C853", // Màu xanh lá để hiển thị điểm
+    color: "#00C853", 
   },
 });
 

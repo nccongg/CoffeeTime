@@ -7,12 +7,12 @@ import {
   Image,
 } from "react-native";
 import { Link } from "expo-router";
-import Icon from "react-native-vector-icons/Feather"; // Đảm bảo bạn đã cài thư viện react-native-vector-icons
+import Icon from "react-native-vector-icons/Feather"; 
 
 import { useSearchParams } from "expo-router/build/hooks";
 import { useNavigation } from "@react-navigation/native";
 import { Text } from "@/components/Themed";
-import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
+import { useRouter } from "expo-router"; 
 
 const coffeeOptions = {
   size: ["Small", "Medium", "Large"],
@@ -40,21 +40,19 @@ export default function DetailScreen() {
     }
   }, [itemString]);
 
-  console.log(item); // Kiểm tra toàn bộ object item
   
   const [size, setSize] = useState("Medium");
   const [milk, setMilk] = useState("Whole");
   const [sweetness, setSweetness] = useState("Medium");
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  console.log(parseFloat(item?.price)); // Kiểm tra item.imageUrl, nếu undefined sẽ không báo lỗi
 
   // Giá khởi điểm
 
   useEffect(() => {
     if (item && item.price) {
       let price = parseFloat(item.price);
-      console.log("Parsed price:", price); // Debug log
+      console.log("Parsed price:", price); 
 
       if (isNaN(price)) {
         console.error("item.price không phải là một số hợp lệ");
@@ -65,24 +63,14 @@ export default function DetailScreen() {
       if (size === "Small") price -= 1;
       if (milk !== "Whole") price += 0.5;
 
-      console.log("Calculated price:", price); // Debug log
-
       setTotalPrice(price * quantity);
     } 
   }, [item, size, milk, quantity]); 
 
   const router = useRouter();
   const handleAddToCart = () => {
-    // console.log("Added to cart:", {
-    //   size,
-    //   milk,
-    //   sweetness,
-    //   quantity,
-    //   totalPrice,
-    // });
     router.push({
       pathname: "/cart",
-      // params: { item: JSON.stringify(item) }, // Chuyển đổi object thành JSON string
     });
   };
 
@@ -124,8 +112,7 @@ export default function DetailScreen() {
       >
         <Icon name="arrow-left" style={styles.icon} />
       </TouchableOpacity>
-      {/* Thông tin chi tiết */}
-      {/* <Text style={styles.title}>{item?.imageUrl}</Text> */}
+
       <View style={styles.content}>
         <Image
           source={{
@@ -181,7 +168,7 @@ export default function DetailScreen() {
         {/* Tổng giá */}
         <Text style={styles.totalPrice}>Total: ${totalPrice.toFixed(2)}</Text>
 
-        {/* Nút Thêm vào giỏ hàng */}
+        {/*Thêm vào giỏ hàng */}
         <TouchableOpacity
           onPress={handleAddToCart}
           style={styles.addToCartButton}
@@ -189,7 +176,7 @@ export default function DetailScreen() {
           <Text style={styles.addToCartText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
-      {/* Biểu tượng giỏ hàng */}
+
       <Link href="/cart" asChild>
         <TouchableOpacity style={styles.cartButton}>
           <Icon name="shopping-cart" style={styles.icon} />

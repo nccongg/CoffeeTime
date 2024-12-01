@@ -3,14 +3,14 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 interface ItemCardProps {
-  imageUrl: string; // Link ảnh
-  name: string; // Tên sản phẩm
-  description: string; // Mô tả sản phẩm
-  price: number; // Giá sản phẩm
-  width?: number; // Chiều rộng của thẻ (tùy chọn)
-  height?: number; // Chiều cao của thẻ (tùy chọn)
-  onPress: () => void; // Hàm xử lý khi nhấn vào thẻ
-  onAddToCart?: () => void; // Hàm xử lý thêm vào giỏ hàng (tùy chọn)
+  imageUrl: string; 
+  name: string; 
+  description: string; 
+  price: number; 
+  width?: number; 
+  height?: number; 
+  onPress: () => void; 
+  onAddToCart?: () => void; 
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({
@@ -18,12 +18,11 @@ const ItemCard: React.FC<ItemCardProps> = ({
   name,
   description,
   price,
-  width = 150, // Giá trị mặc định nếu không truyền vào
-  height = 230, // Giá trị mặc định nếu không truyền vào
-  onPress, // Hàm xử lý khi nhấn vào thẻ
+  width = 150, 
+  height = 230, 
+  onPress, 
   onAddToCart = () => {},
 }) => {
-  // Kiểm tra nếu width và height khác mặc định
   const isCustomSize = width !== 150 || height !== 230;
 
   return (
@@ -32,7 +31,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
         styles.card,
         { width, height, flexDirection: isCustomSize ? "row" : "column" },
       ]}
-      onPress={onPress} // Gọi hàm onPress khi nhấn vào thẻ
+      onPress={onPress} 
     >
       <Image
         source={{ uri: imageUrl }}

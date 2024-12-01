@@ -1,12 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Image, FlatList, ScrollView, TouchableOpacity } from "react-native";
 import { Text } from "@/components/Themed";
-import Icon from "react-native-vector-icons/Feather"; // Đảm bảo bạn đã cài thư viện react-native-vector-icons
-
+import Icon from "react-native-vector-icons/Feather"; 
 import LoyaltyCard from "@/components/based/LoyaltyCard";
 import ItemCard from "@/components/based/ItemCard";
-import { useRouter } from "expo-router"; // Khai báo useRouter từ expo-router
-import { Button } from "react-native-paper";
+import { useRouter } from "expo-router"; 
 
 const items = [
   {
@@ -52,14 +50,12 @@ const items = [
 ];
 
 function HomeScreen() {
-  const router = useRouter(); // Khởi tạo router từ expo-router
+  const router = useRouter(); 
 
-  // Hàm điều hướng tới màn hình chi tiết
   const navigateToDetail = (item: any) => {
-    // console.log(item);
     router.push({
       pathname: "/detail",
-      params: { item: JSON.stringify(item) }, // Chuyển đổi object thành JSON string
+      params: { item: JSON.stringify(item) }, 
     });
   };
 
@@ -83,10 +79,9 @@ function HomeScreen() {
             style={styles.icon}
             onPress={() => router.push("/cart")}
           />{" "}
-          {/* Sử dụng router.push */}
         </View>
 
-        <LoyaltyCard drinksPurchased={5} />
+        <LoyaltyCard initialDrinksPurchased={5} />
       </View>
 
       <ScrollView
@@ -104,7 +99,7 @@ function HomeScreen() {
                   name={item.name}
                   description={item.description}
                   price={item.price}
-                  onPress={() => navigateToDetail(item)} // Khi nhấn vào item, điều hướng tới màn hình chi tiết
+                  onPress={() => navigateToDetail(item)} 
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -124,12 +119,12 @@ function HomeScreen() {
                   name={item.name}
                   description={item.description}
                   price={item.price}
-                  width={330} // Cung cấp width
-                  height={150} // Cung cấp height
-                  onPress={() => navigateToDetail(item)} // Khi nhấn vào item, điều hướng tới màn hình chi tiết
+                  width={330} 
+                  height={150} 
+                  onPress={() => navigateToDetail(item)} 
                 />
               )}
-              keyExtractor={(item) => item.id.toString()} // Đảm bảo id là string
+              keyExtractor={(item) => item.id.toString()} 
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.flatListContent}
             />
@@ -198,17 +193,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-
-
-// import { Link } from "expo-router";
-// import { Text } from "@/components/Themed";
-
-// function HomeScreen() {
-//     return (
-//       <Link href="/detail">
-//         <Text>hellloooo</Text>
-//       </Link>
-//     );
-// }
-
-// export default HomeScreen;

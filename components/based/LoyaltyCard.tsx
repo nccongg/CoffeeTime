@@ -1,16 +1,32 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 interface LoyaltyCardProps {
-  drinksPurchased: number; // Số ly nước đã mua
+  initialDrinksPurchased?: number;
 }
 
-const LoyaltyCard: React.FC<LoyaltyCardProps> = ({ drinksPurchased }) => {
+const LoyaltyCard: React.FC<LoyaltyCardProps> = ({
+  initialDrinksPurchased = 0,
+}) => {
+  const [drinksPurchased, setDrinksPurchased] = useState(
+    initialDrinksPurchased
+  );
   const maxCups = 8;
 
+  const handleIconPress = () => {
+    if (drinksPurchased === maxCups) {
+      Alert.alert("Congratulations!", "You've completed your loyalty card!", [
+        {
+          text: "Reset",
+          onPress: () => setDrinksPurchased(0), 
+        },
+      ]);
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={handleIconPress} style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Loyalty card</Text>
         <Text style={styles.text}>{`${drinksPurchased}/${maxCups}`}</Text>
@@ -20,14 +36,14 @@ const LoyaltyCard: React.FC<LoyaltyCardProps> = ({ drinksPurchased }) => {
         {[...Array(maxCups)].map((_, index) => (
           <Icon
             key={index}
-            name="coffee" // Icon ly nước
+            name="coffee" 
             size={24}
             style={styles.cupIcon}
             color={index < drinksPurchased ? "#151515" : "#ccc"}
           />
         ))}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -43,11 +59,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   header: {
-    // display: 'flex',
     flexDirection: "row",
     justifyContent: "space-between",
-    // alignItems: "center",
-    // backgroundColor: 'white',
     paddingHorizontal: 30,
     height: 30,
     width: "100%",

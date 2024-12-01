@@ -15,10 +15,10 @@ const Profile = () => {
 
   const [editableField, setEditableField] = useState<string | null>(null);
   const [profileData, setProfileData] = useState({
-    fullName: "Anderson",
-    phoneNumber: "+60134589525",
-    email: "Anderson@email.com",
-    address: "3 Addersion Court\nChino Hills, HO56824, United States",
+    fullName: "Nguyen Chi Cong",
+    phoneNumber: "+84964481780",
+    email: "congcony442004@gmail.com",
+    address: "District 5, Ho Chi Minh City, Viet Nam",
   });
 
   const handleEditField = (field: string) => {
@@ -50,7 +50,7 @@ const Profile = () => {
         <Icon
           name="user"
           size={24}
-          color="#334E68"
+          color="black"
           style={{ paddingRight: 10 }}
         />
         <View style={styles.textContainer}>
@@ -68,7 +68,7 @@ const Profile = () => {
           )}
         </View>
         <TouchableOpacity onPress={() => handleEditField("fullName")}>
-          <Icon name="edit-2" size={20} color="#334E68" />
+          <Icon name="edit-2" size={20} color="black" />
         </TouchableOpacity>
       </View>
 
@@ -76,7 +76,7 @@ const Profile = () => {
         <Icon
           name="phone"
           size={24}
-          color="#334E68"
+          color="black"
           style={{ paddingRight: 10 }}
         />
         <View style={styles.textContainer}>
@@ -95,7 +95,7 @@ const Profile = () => {
           )}
         </View>
         <TouchableOpacity onPress={() => handleEditField("phoneNumber")}>
-          <Icon name="edit-2" size={20} color="#334E68" />
+          <Icon name="edit-2" size={20} color="black" />
         </TouchableOpacity>
       </View>
 
@@ -103,7 +103,7 @@ const Profile = () => {
         <Icon
           name="mail"
           size={24}
-          color="#334E68"
+          color="black"
           style={{ paddingRight: 10 }}
         />
         <View style={styles.textContainer}>
@@ -125,8 +125,8 @@ const Profile = () => {
           <Icon
             name="edit-2"
             size={20}
-            color="#334E68"
-            style={{ paddingRight: 10 }}
+            color="black"
+            style={{ paddingRight: 0, right: 0 }}
           />
         </TouchableOpacity>
       </View>
@@ -135,7 +135,7 @@ const Profile = () => {
         <Icon
           name="map-pin"
           size={24}
-          color="#334E68"
+          color="black"
           style={{ paddingRight: 10 }}
         />
         <View style={styles.textContainer}>
@@ -154,7 +154,7 @@ const Profile = () => {
           )}
         </View>
         <TouchableOpacity onPress={() => handleEditField("address")}>
-          <Icon name="edit-2" size={20} color="#334E68" />
+          <Icon name="edit-2" size={20} color="black" />
         </TouchableOpacity>
       </View>
     </View>
@@ -165,7 +165,7 @@ const Profile = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#EAEAEA",
     padding: 20,
   },
   header: {
@@ -186,12 +186,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   fieldContainer: {
+    padding: 20,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 30,
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
-    paddingBottom: 10,
+    marginBottom: 10,
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   textContainer: {
     flex: 1,
@@ -203,11 +210,11 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
-    color: "#334E68",
+    color: "black",
   },
   input: {
     fontSize: 16,
-    color: "#334E68",
+    color: "black",
     borderBottomWidth: 1,
     borderBottomColor: "#A0A0A0",
     paddingVertical: 2,
