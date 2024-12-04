@@ -100,6 +100,7 @@ function HomeScreen() {
                   description={item.description}
                   price={item.price}
                   onPress={() => navigateToDetail(item)} 
+                  onAddToCart={() => navigateToDetail(item)}
                 />
               )}
               keyExtractor={(item) => item.id}
@@ -119,7 +120,7 @@ function HomeScreen() {
                   name={item.name}
                   description={item.description}
                   price={item.price}
-                  width={330} 
+                  width={335} 
                   height={150} 
                   onPress={() => navigateToDetail(item)} 
                 />

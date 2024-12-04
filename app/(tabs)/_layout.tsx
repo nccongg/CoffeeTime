@@ -1,7 +1,7 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import {Colors} from "@/constants/Colors";
 import { useColorScheme } from "react-native";
@@ -28,11 +28,15 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: "black",
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         // headerShown: useClientOnlyValue(false, true),
-        tabBarStyle: { borderWidth: 0 },
+        tabBarStyle: { paddingTop: 10, height: 60 },
+        tabBarIconStyle: {
+          // padding: 5, 
+          // paddingVertical: 5,
+        },
       }}
     >
       <Tabs.Screen
@@ -52,7 +56,7 @@ export default function TabLayout() {
           headerShown: false,
           title: "Rewards",
           tabBarIcon: ({ color }) => (
-            <Feather name="gift" color={color} size={24} />
+            <Feather name="gift" color={color} size={26} />
           ),
           tabBarShowLabel: false,
         }}
@@ -66,7 +70,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="clipboard-list-outline"
               color={color}
-              size={24}
+              size={28}
             />
           ),
           tabBarShowLabel: false,

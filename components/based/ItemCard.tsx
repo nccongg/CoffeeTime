@@ -49,7 +49,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.price}>${price.toFixed(2)}</Text>
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={onAddToCart}>
+      <TouchableOpacity style={styles.addButton} onPress={onPress}>
         <Icon name="plus" size={16} color="#fff" />
       </TouchableOpacity>
     </TouchableOpacity>
